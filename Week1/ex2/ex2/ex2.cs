@@ -55,7 +55,7 @@ namespace ex2
                     break;
 
                 default:
-                    Console.WriteLine("\n Wrong operation entered");
+                    Console.WriteLine("\n Wrong operation entered: "+ operation);
                     return;
                     break;                  
             }
