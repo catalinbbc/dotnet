@@ -27,7 +27,7 @@ namespace ex1
 
             for (int i = 0; i < stackLength; i++)
             {
-                //Console.Write(myStack.;
+               
                 Console.WriteLine(myStack.Pop());
                 
             }
