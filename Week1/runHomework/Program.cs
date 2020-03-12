@@ -11,7 +11,7 @@ namespace homework1
             do
             {
                 //Console.Clear();
-                Console.WriteLine("\n\n\nPlease enter an exercise number 1-6 or 0 to exit:");
+                Console.WriteLine("\n\n\nPlease enter an exercise number 1-7 or 0 to exit:");
                 exNumber = Int32.Parse(Console.ReadLine());
                 //Console.WriteLine("Selected exercise: " + exNumber);
 
@@ -43,13 +43,17 @@ namespace homework1
                         Exercise6.goex();
                         break;
 
+                    case 7:
+                        Exercise7.goex();
+                        break;
+
 
                     default:
                         Console.WriteLine("Invalid Selection :" + exNumber);
                         break;
                 }
                 // code block to be executed
-            } while (exNumber > 0 && exNumber <= 6);
+            } while (exNumber > 0 && exNumber <= 7);
 
 
 
