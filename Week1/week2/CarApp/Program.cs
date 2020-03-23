@@ -7,22 +7,54 @@ namespace CarApp
     {
         static void Main(string[] args)
         {
-            int choice = 1;
-            int selectedStoreId = 1;//default store
+            //define dealers
+            Store storeFord = new Store("Ford Iasi");
 
-            Store s1 = new Store(); //FORD Store
-            Store s2 = new Store();//Skoda store
-            List<Store> StoreList = new List<Store>();
+            storeFord.Dealer = new Maker();
+            storeFord.Dealer.Make = "FORD";
+            storeFord.Dealer.ReadyTime = "30 days"; 
+            IVehicle car1 = new Car();
+            car1.ID = "C1";
+            car1.Make = "Ford";
+            car1.Model = "Focus";
+            car1.Year = 2020;
+            car1.Price = 17500;
+            car1.VIN = "UUDSKWLI12FF331";
+            storeFord.Dealer.inventory.Add(car1.ID, car1);
 
-            StoreList.Add(s1);
-            StoreList.Add(s2);
+            Store storeSkoda = new Store("Skoda Iasi");
+            storeSkoda.Dealer = new Maker();
+            storeSkoda.Dealer.Make = "SKODA";
+            storeSkoda.Dealer.ReadyTime = "21 days";
 
-            Store selectedStore = new Store();
+            IVehicle car2 = new Car();
+            car2.ID = "C2";
+            car2.Make = "Skoda";
+            car2.Model = "Octavia 4";
+            car2.Year = 2020;
+            car2.Price = 15500;
+            car2.VIN = "SKDAA002020FVAS";
+            storeSkoda.Dealer.inventory.Add(car2.ID, car2);
 
+
+            //customer 
+            Customer customer = new Customer("Alex TheClient", "07233244234", "C1533");
+
+            IVehicle FordOffer = storeFord.GetCars("Ford", "Focus", 2020);
+            string fordDeliveryTime = storeFord.getReadyTime();
+
+
+            IVehicle SkodaOffer = storeSkoda.GetCars("Skoda", "Octavia 4", 2020);
+            string skodaDeliveryTime = storeSkoda.getReadyTime();
+
+
+            int choice = 0;
+
+            int orderId = 0;
             do
             {
 
-                choice = readInput();
+               choice = readInput();
 
             switch(choice)
                 {
@@ -31,14 +63,60 @@ namespace CarApp
                         break;
 
                     case 1:
-                        //chose the store
-                        selectedStoreId = choice;
-                        //if (StoreList[selectedStoreId] is Store)
+                       
+
+                        if(FordOffer != null)
+                        {
+                            Console.WriteLine("Ford Offer:");
+                            Console.WriteLine("Ford Car:#"+FordOffer.ID+" Model: "+ FordOffer.Model +" Year : "+FordOffer.Year+" Price:"+FordOffer.Price +" Delivered in "+fordDeliveryTime);
+                        }
+                            
                         break;
 
                     case 2:
-                        //add a car to the selected store
-                        Console.WriteLine("Please enter details for the new car of the :");
+                        
+                        if (SkodaOffer != null)
+                        {
+                            Console.WriteLine("Skoda Offer:");
+                            Console.WriteLine("Skoda Car:#" + SkodaOffer.ID + " Model: " + SkodaOffer.Model + " Year : " + SkodaOffer.Year + " Price:" + SkodaOffer.Price + " Delivered in " + skodaDeliveryTime);
+                        }
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Enter Id of the car you want to buy");
+                        string carId = Console.ReadLine();
+                        //to do validation and a method to search in stores inventary 
+                        
+                        //search in ford
+                        if(carId == FordOffer.ID)
+                        {
+                          storeFord.MakeOrder(customer, FordOffer, 17100, fordDeliveryTime);
+                        }
+                        else if (carId == SkodaOffer.ID)
+                        {
+                           storeSkoda.MakeOrder(customer, SkodaOffer, 15100, skodaDeliveryTime);
+                        }
+                        else
+                        {
+                            Console.WriteLine( "Invalid CarId ..");
+                        }
+
+                        break;
+
+
+                    case 4:
+                        Console.WriteLine("Enter Id of the order to cancel");
+                         orderId = int.Parse(Console.ReadLine());
+
+                        //to do validation and a method to search in store orders 
+
+                        if(orderId > 0)
+                        {
+                            //search in Ford 
+                            storeFord.CancelOrder(orderId);
+                            //search in skoda
+                        }    
+                        
                         break;
 
                     default:
@@ -52,23 +130,9 @@ namespace CarApp
             
             
             } while (choice != 0);
+            
 
 
-
-
-            Car c = new Car("Ford", "Focus", 15000);
-            Car d = new Car("Ford", "Mustang", 35000);
-            Car e = new Car("Ford", "Ka", 7500);
-
-
-            Store s = new Store();
-            s.Cars.Add(c);
-            s.Cars.Add(d);
-            s.Cars.Add(e);
-        
-        
-        
-        
         }
 
 
@@ -77,14 +141,12 @@ namespace CarApp
             int choice = 0;
            
             Console.WriteLine("Please enter an option:");
-            Console.WriteLine("1 - Choose a store Ford = 1/ Skoda = 2");
+            Console.WriteLine("1 - view Ford Offers");
+            Console.WriteLine("2 - view Skoda Offers");
 
-           
+            Console.WriteLine("3 - make an order");
+            Console.WriteLine("4 - cancel an order");
 
-            Console.WriteLine("2 - add a car to the invetory ");
-           
-            Console.WriteLine("3 - list cars from the current store inventory ");
-            Console.WriteLine("4 - order a carfrom inventory ");
             try
             {
                 choice = int.Parse(Console.ReadLine());
