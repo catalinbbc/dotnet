@@ -73,6 +73,12 @@ namespace week3Run
 
             testObj.readData();
 
+            DateTime dateMin = new DateTime(2020,03,01);
+            DateTime dateMax = new DateTime(2020,03,31);
+            RangeException<DateTime> testObjDate = new RangeException<DateTime>(dateMin, dateMax);
+
+            testObjDate.readData();
+
 
 
         }
