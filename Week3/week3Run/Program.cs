@@ -43,14 +43,15 @@ namespace week3Run
 
 
             //ex3 - extend myEnumerable 
+            /*
 
             List<int> myList = new List<int>() { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 };
-            /*
-            myList.Add(1);
-            myList.Add(2);
-            myList.Add(3);
-            myList.Add(4);
-            */
+            
+            //myList.Add(1);
+            //myList.Add(2);
+            //myList.Add(3);
+            //myList.Add(4);
+          
 
             Console.WriteLine("Designated list:");
             foreach(int item in myList)
@@ -64,6 +65,14 @@ namespace week3Run
             Console.WriteLine("Min of List = "+myList.Min());
             Console.WriteLine("Max of List = "+myList.Max());
             Console.WriteLine("Prod of List = "+myList.Prod());
+            */
+
+
+            //Ex 4 Custom Exception
+            RangeException<int> testObj = new RangeException<int>(1, 100);
+
+            testObj.readData();
+
 
 
         }
