@@ -6,45 +6,20 @@ namespace week3Run
 {
     delegate void TimePassed(int seconds);
 
-    public class MyTimerClass
-    {
-        public event EventHandler Elapsed;
-
-        public void OnOneSecond(int seconds)
-        {
-            Thread.Sleep(seconds);
-            Console.WriteLine("Wait ..." + seconds + "...seconds");
-        }
-
-
-
-        public MyTimerClass()
-        {
-            //Thread.Sleep(10000);
-        }
-    }
     class Program
     {
         
-
-    
-
         static void Main(string[] args)
         {
 
-            MyTimerClass mc = new MyTimerClass();
+            // Timer theTimer = new Timer();
+            //theTimer.
 
-            TimePassed d = mc.OnOneSecond;
-            d();
-            /*
-            while(true)
-            {
-                mc.Elapsed += ;
-            }
-            */
-          
+            MyTimerClass t = new MyTimerClass(10000, true);
+            t.Start();
+            t.Dispose();
 
-            /*
+            
             Ex1MyList<int> myGenericList = new Ex1MyList<int>();
             myGenericList.myAdd(1);
             myGenericList.myAdd(10);
@@ -62,7 +37,7 @@ namespace week3Run
 
             Console.WriteLine("Elements  in my List of type " + myDoubleList + " is  " + myDoubleList.myCount());
             
-            */
+            
         }
     }
 }
