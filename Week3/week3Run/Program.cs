@@ -99,13 +99,40 @@ namespace week3Run
     */
             //Ex 6
 
-            BitArray64 myNumber = new BitArray64(1234567);
+            //long sampleNumber = 1234567;
+
+            long sampleNumber = 11;
+            BitArray64 myNumber = new BitArray64(sampleNumber);
 
 
             Console.WriteLine("Bit 7 is "+myNumber[7]);
 
+            Console.WriteLine(myNumber[2] == myNumber[3]);
 
+            Console.WriteLine("My Number {0} as a Bit Array:", sampleNumber);
+            foreach (var value in myNumber)
+            {
+                Console.Write(value);
+            }
+            //change the bit 3,4,5 to 1
+            myNumber[3] = 1;
+            myNumber[4] = 1;
+            myNumber[5] = 1;
 
+            Console.WriteLine("\nchange the bit 3,4,5 to 1 and the bit Array becomes: ");
+            foreach (var value in myNumber)
+            {
+                Console.Write(value);
+            }
+
+            try
+            {
+                Console.WriteLine(myNumber[77]);
+            }
+            catch(IndexOutOfRangeException ex)
+            {
+                Console.WriteLine("\nnumber[77 ]triggers "+ex.Message);
+            }
         }
     }
 }

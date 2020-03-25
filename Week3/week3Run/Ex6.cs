@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 namespace week3Run
 {
-    class BitArray64
+    class BitArray64 : IEnumerable<long>
     {
         private long value;
 
@@ -45,6 +46,45 @@ namespace week3Run
                 // Set the bit at position index to value
                 value |= (long)(value << index);
             }
+
+
         }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public IEnumerator<long> GetEnumerator()
+        {
+            for (int i = 63; i >= 0; i--)
+            {
+                yield return this[i];
+            }
+        }
+
+       
+        
+        public static bool operator ==(BitArray64 bitArray1, BitArray64 bitArray2)
+        {
+            return Object.Equals(bitArray1, bitArray1);
+        }
+
+        public static bool operator !=(BitArray64 bitArray1, BitArray64 bitArray2)
+        {
+            return !Object.Equals(bitArray1, bitArray2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            BitArray64 objAsBitArray64 = obj as BitArray64;
+
+            return this.value == objAsBitArray64.value;
+        }
+
     }
 }
