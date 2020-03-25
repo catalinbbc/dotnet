@@ -67,7 +67,7 @@ namespace week3Run
             Console.WriteLine("Prod of List = "+myList.Prod());
             */
 
-
+            /*
 
             try
             {
@@ -95,6 +95,16 @@ namespace week3Run
             {
                 Console.WriteLine(ex.Message);
             }
+
+    */
+            //Ex 6
+
+            BitArray64 myNumber = new BitArray64(1234567);
+
+
+            Console.WriteLine("Bit 7 is "+myNumber[7]);
+
+
 
         }
     }
