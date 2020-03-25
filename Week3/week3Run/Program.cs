@@ -68,18 +68,33 @@ namespace week3Run
             */
 
 
-            //Ex 4 Custom Exception
-            RangeException<int> testObj = new RangeException<int>(1, 100);
 
-            testObj.readData();
+            try
+            {
+                Ex4.Execute();
+            }
+            catch (InvalidRangeException<int> ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            DateTime dateMin = new DateTime(2020,03,01);
-            DateTime dateMax = new DateTime(2020,03,31);
-            RangeException<DateTime> testObjDate = new RangeException<DateTime>(dateMin, dateMax);
+            try
+            {
+                Ex4.ExecuteDate();
+            }
+            catch (InvalidRangeException<DateTime> ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
-            testObjDate.readData();
-
-
+            try
+            {
+                Ex4.ExecureSeq();
+            }
+            catch (InvalidRangeException<int> ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
     }
