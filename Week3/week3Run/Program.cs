@@ -101,7 +101,7 @@ namespace week3Run
 
             //long sampleNumber = 1234567;
 
-            long sampleNumber = 11;
+            long sampleNumber = 121;
             BitArray64 myNumber = new BitArray64(sampleNumber);
 
 
