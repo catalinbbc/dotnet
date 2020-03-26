@@ -145,15 +145,36 @@
             // 10 - create a new class: public class UserPosts { public User User {get; set}; public List<Post> Posts {get; set} }
             //    - create a new list: List<UserPosts>
             //    - insert in this list each user with his posts only
-
+            Console.WriteLine("\n#########################\n Ex 10 Group each posts in a userPosts Object an list");
             List<UserPosts> userWithPosts = new List<UserPosts>();
+
+            var UserPo = from p in allPosts
+                         join u in allUsers
+                         on p.UserId equals u.Id
+                         select new { User = u, post = p };
             
-            foreach(var post in allPosts)
+            foreach (var user in allUsers)
             {
-                //userWithPosts.
+                userWithPosts.Add(new UserPosts
+                {
+                    User = user,
+                    Posts = allPosts.Where(p => p.UserId == user.Id).ToList()
+                });
             }
 
+            foreach(var userPosts in  userWithPosts)
+            {
+                Console.WriteLine("\n@@@@@@@@@@@@@@@@@@@@@@@@\nThe posts of the User [{0}] {1} are #{2}",userPosts.User.Id, userPosts.User.Name, userPosts.Posts.Count);
+                foreach(var userPost in userPosts.Posts)
+                {
+                    Console.WriteLine("PostId: {0} with title: {1}",userPost.Id, userPost.Title );
+                }
+            }
 
+            Console.WriteLine("End of Ex 10");
+            Console.ReadLine();
+
+            //################################################################
             // 11 - order users by zip code
             Console.WriteLine("\n############### EX 11 - order users by zip code. :##############");
 
@@ -179,12 +200,12 @@
 
         public class UserPosts
         {
-            public List<User> User { get; set; }             
+            public User User { get; set; }             
             public List<Post> Posts { get; set; }
 
-            public UserPosts(List<User>allUsers, List<Post>allPosts)
+            public UserPosts(User myUser, List<Post>allPosts)
             {
-                User = allUsers;
+                User = myUser;
                 Posts = allPosts;
             }
 

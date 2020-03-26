@@ -1,4 +1,7 @@
-﻿namespace LinqAndLamdaExpressions.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace LinqAndLamdaExpressions.Models
 {
     public class User
     {
@@ -17,5 +20,10 @@
         public string Website { get; set; }
 
         public Company Company { get; set; }
+
+        public static implicit operator List<object>(User v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
