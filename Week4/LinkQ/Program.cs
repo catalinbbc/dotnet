@@ -133,10 +133,14 @@
             }
 
             // 8 - print the user with min lat
-
+            Console.WriteLine("\n############### EX 8 print the user with min lat. :##############");
+            var theMinUser = allUsers.OrderBy(item => item.Address.Geo.Lat).First();
+            Console.WriteLine("User with Min Lat is "+ theMinUser.Name +" at: "+ theMinUser.Address.Geo.Lat);
 
             // 9 - print the user with max long
-
+            Console.WriteLine("\n############### 9 - print the user with max long. :##############");
+            var theMaxUser = allUsers.OrderByDescending(item => item.Address.Geo.Lng).First();
+            Console.WriteLine("User with Max Long is " + theMaxUser.Name + " at: " + theMaxUser.Address.Geo.Lng);
 
             // 10 - create a new class: public class UserPosts { public User User {get; set}; public List<Post> Posts {get; set} }
             //    - create a new list: List<UserPosts>
