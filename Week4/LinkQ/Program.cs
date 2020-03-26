@@ -70,7 +70,7 @@
                               {
                                   c = g.Key,
                                   count = g.Count(),
-                              }).OrderBy(c => c.count);
+                              }).OrderByDescending(c => c.count);
 
             foreach (var x in postGroups)
             {
@@ -147,8 +147,16 @@
             //    - insert in this list each user with his posts only
 
             // 11 - order users by zip code
+            Console.WriteLine("\n############### EX 11 - order users by zip code. :##############");
+
+          var OrderedUsers = allUsers.OrderBy(o => o.Address.Zipcode).ToList();
+            foreach (var user in OrderedUsers)
+            {
+                Console.WriteLine("User {0} is at zip {1}", user.Name, user.Address.Zipcode);
+            }    
 
             // 12 - order users by number of posts
+            //done on ex3
         }
 
         private static List<Post> ReadPosts(string file)
@@ -159,6 +167,12 @@
         private static List<User> ReadUsers(string file)
         {
             return ReadData.ReadFrom<User>(file);
+        }
+
+        public class UserPosts
+        {
+            public List<User> User { get; set; }
+            public List<Post> Posts { get; set; }
         }
     }
 }
