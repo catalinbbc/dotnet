@@ -146,6 +146,14 @@
             //    - create a new list: List<UserPosts>
             //    - insert in this list each user with his posts only
 
+            List<UserPosts> userWithPosts = new List<UserPosts>();
+            
+            foreach(var post in allPosts)
+            {
+                //userWithPosts.
+            }
+
+
             // 11 - order users by zip code
             Console.WriteLine("\n############### EX 11 - order users by zip code. :##############");
 
@@ -171,8 +179,18 @@
 
         public class UserPosts
         {
-            public List<User> User { get; set; }
+            public List<User> User { get; set; }             
             public List<Post> Posts { get; set; }
+
+            public UserPosts(List<User>allUsers, List<Post>allPosts)
+            {
+                User = allUsers;
+                Posts = allPosts;
+            }
+
+            public UserPosts()
+            {
+            }
         }
     }
 }
