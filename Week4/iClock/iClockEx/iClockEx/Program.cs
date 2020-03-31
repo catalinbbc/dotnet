@@ -1,54 +1,32 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
 
 namespace iClockEx
 {
-     public class SystemClock : IClock
+    public class Program
     {
-        DateTime IClock.Now => throw new NotImplementedException();
-
-        DateTime IClock.UtcNow => throw new NotImplementedException();
-
-        BusinessDate IClock.Today => throw new NotImplementedException();
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
-    }
+            SystemClock sytemClock = new SystemClock();
+            Console.WriteLine("IClock Interface and BusinessDate Struct:");
+            Console.WriteLine("\nSystem DateTime:");
+            Console.WriteLine("Now:" + sytemClock.Now.ToString());
+            Console.WriteLine("UtcNow:" + sytemClock.UtcNow.ToString());
 
-    public struct BusinessDate : IFormattable, IEquatable<BusinessDate>, IComparable<BusinessDate>, IXmlSerializable
-    {
-        public string ToString(string format, IFormatProvider formatProvider)
-        {
-            throw new NotImplementedException();
-        }
 
-        int IComparable<BusinessDate>.CompareTo(BusinessDate other)
-        {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("\nCustom Date Struct:");
+            Console.WriteLine("Today default no format:" + sytemClock.Today.ToString());
 
-        bool IEquatable<BusinessDate>.Equals(BusinessDate other)
-        {
-            throw new NotImplementedException();
-        }
+            //Console.WriteLine(sytemClock.Today.Day);
 
-        XmlSchema IXmlSerializable.GetSchema()
-        {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("Today in specific format eg<MMMM dd, yyyy>: " + sytemClock.Today.ToString("MMMM dd, yyyy"));
 
-        void IXmlSerializable.ReadXml(XmlReader reader)
-        {
-            throw new NotImplementedException();
-        }
+            BusinessDate date1 = new BusinessDate(31, 3, 2020);
+            BusinessDate date2 = new BusinessDate(31, 3, 2020);
 
-        void IXmlSerializable.WriteXml(XmlWriter writer)
-        {
-            throw new NotImplementedException();
+            Console.WriteLine("Compare [{0}] == [{1}] :{2}",date1.ToString() ,date2.ToString(), date1 == date2);
+            Console.WriteLine("Compare [{0}] != [{1}] :{2}",date1.ToString() ,date2.ToString(), date1 != date2);
+
+
         }
     }
 

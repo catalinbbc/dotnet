@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iClockEx", "iClockEx\iClockEx.csproj", "{96E6A9D9-1B2E-45F1-97C4-74DBE5B5111B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "iClockEx", "iClockEx\iClockEx.csproj", "{96E6A9D9-1B2E-45F1-97C4-74DBE5B5111B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9C894ECA-A6DA-46BB-9E33-28DABDB6C177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unitTests", "unitTests\unitTests\unitTests.csproj", "{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{96E6A9D9-1B2E-45F1-97C4-74DBE5B5111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96E6A9D9-1B2E-45F1-97C4-74DBE5B5111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96E6A9D9-1B2E-45F1-97C4-74DBE5B5111B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ADCF35D8-6C2A-46BC-A3E0-28B010A38EDA} = {9C894ECA-A6DA-46BB-9E33-28DABDB6C177}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED00F917-4D05-4170-8A02-5738C55220C0}
