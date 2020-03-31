@@ -78,6 +78,23 @@ namespace iClockEx
             return false;
         }
 
+        public int CompareTo([AllowNull] BusinessDate other)
+        {
+            string currentStr = String.Join('-', this.Year, this.Month, this.Day);
+            string otherStr = String.Join('-', other.Year, other.Month, other.Day);
+            return String.Compare(currentStr, otherStr);
+        }
+
+        public bool Equals([AllowNull] BusinessDate other)
+        {
+            if (this.Day == other.Day && this.Month == other.Month && this.Year == other.Year)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public static bool operator == (BusinessDate obj1, BusinessDate obj2)
         {
 
