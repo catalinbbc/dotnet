@@ -101,6 +101,7 @@ namespace Ex4ReadDir
                 path = queue.Dequeue();
                 try
                 {
+                    //get a list of dirs in current dir
                     foreach (string subDir in Directory.GetDirectories(path))
                     {
                         queue.Enqueue(subDir);
@@ -114,6 +115,7 @@ namespace Ex4ReadDir
                 string[] files = null;
                 try
                 {
+                    //call back the new path
                     files = Directory.GetFiles(path);
                 }
                
