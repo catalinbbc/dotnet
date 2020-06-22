@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExDecorator
+namespace Decorator
 {
     class Program
     {
