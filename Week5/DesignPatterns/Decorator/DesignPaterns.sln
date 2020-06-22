@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExDecorator", "ExDecorator.csproj", "{DB3A01FD-3B9E-4C51-A15E-924A7FE5C4D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExStrategy", "..\ExStrategy\ExStrategy.csproj", "{63B2682B-359B-4807-B82A-52744E3129D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB3A01FD-3B9E-4C51-A15E-924A7FE5C4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3A01FD-3B9E-4C51-A15E-924A7FE5C4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3A01FD-3B9E-4C51-A15E-924A7FE5C4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3A01FD-3B9E-4C51-A15E-924A7FE5C4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B2682B-359B-4807-B82A-52744E3129D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B2682B-359B-4807-B82A-52744E3129D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B2682B-359B-4807-B82A-52744E3129D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B2682B-359B-4807-B82A-52744E3129D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18942F99-219E-4672-9944-B4764C93D267}
+	EndGlobalSection
+EndGlobal

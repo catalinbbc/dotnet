@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.ExtendedProperties;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -94,22 +95,53 @@ namespace Ex3_regEx
                 }
 
                 //#############################################################
-                Console.WriteLine("\n6.Display all duplicate URLs");
-                //    
-                //Regex rd = new Regex(@"/ (\b\S +\b)\s +\b\1\b /", RegexOptions.IgnoreCase);
-               // Regex rd = new Regex(@".*(.+).*\1.*\1.*", RegexOptions.IgnoreCase);
-                Regex regDup = new Regex(@".*(.+)\1\1.*", RegexOptions.IgnoreCase);
-                Match textDuplicates = regDup.Match(AllText);
+                Console.WriteLine("\n6.Display all duplicate URLs :");
 
-                MatchCollection duplicates = r.Matches(textDuplicates.Value);
+                List<string> distinctHosts = new List<string>();
+
+                //Regex rd = new Regex(@"/ (\b\S +\b)\s +\b\1\b /", RegexOptions.IgnoreCase);
+                // Regex rd = new Regex(@".*(.+).*\1.*\1.*", RegexOptions.IgnoreCase);
+                //Regex regDup = new Regex(@".*(.+)\1\1.*", RegexOptions.IgnoreCase);
+                //Regex regDup = new Regex(@".*? (\w +\.\w +)$", RegexOptions.IgnoreCase);
+                //Match textDuplicates = regDup.Match(AllText);
+
+                //MatchCollection duplicates = r.Matches(textDuplicates.Value);
+                //MatchCollection duplicates = r.Matches(AllText);
                
                 i = 1;
                 foreach (Match match in matchCollection)
                 {
-
-                    Console.WriteLine("#{0} - Url:{1}  ", i, match.Groups["Domain"].Value);
+                    Regex reg = new Regex(@",");
+                    string url = reg.Replace(match.Value, "");
                     //Console.WriteLine("#{0} - Url:{1}  ", i, match.Value);
-                    i++;
+                    UriBuilder builder = new UriBuilder(url);
+
+                    //Console.WriteLine("#{0} - Url:{1}  ", i, builder.Uri.AbsoluteUri);
+
+
+                    Uri uri = new Uri(builder.Uri.AbsoluteUri);
+
+                    reg = new Regex(@"www.");
+                    url = reg.Replace(uri.Host,"");
+
+                    //Console.WriteLine("#{0} - Url:{1}  ", i, url);
+
+
+
+
+                    if (distinctHosts.Contains(url))
+                    {
+                        //Console.WriteLine("#{0} - Url:{1}  ", i, match.Value);
+                        Console.WriteLine("#{0} - Url:{1}  ", i, url);
+
+                        i++;
+                    }
+                    else
+                    {
+                        distinctHosts.Add(url);
+                    }
+                    //Console.WriteLine("#{0} - Url:{1}  ", i, match.Groups["Domain"].Value);
+                    
 
                 }
             }
