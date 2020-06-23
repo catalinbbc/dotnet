@@ -34,7 +34,8 @@ namespace ProcessRequests
                 var allComments = JsonSerializer.Deserialize<List<Comment>>(commentsTasks.Result);
                 foreach (Comment comment in allComments)
                 {
-                    Console.WriteLine("Post [" + comment.PostId + "] :" + comment.Body+"\n");
+                    Console.WriteLine($"Post Details{0}", comment.PostId);
+                    Console.WriteLine("Comments :" + comment.Body+"\n");
                 }
             }
             catch (Exception ex)
@@ -44,6 +45,7 @@ namespace ProcessRequests
 
         }
 
+        
         private static async Task<string> GetAllPostsAsync()
         {
             HttpClient client = new HttpClient();
