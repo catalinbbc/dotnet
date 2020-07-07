@@ -6,13 +6,13 @@
 
     public interface ISpeakerRepository
     {
-        Task<IEnumerable<SpeakerResponseModel>> CountSessionPerSpeaker();
+         int CountSessionPerSpeaker();
 
-        Task<Speaker> Get(int id);
+        Speaker Get(int id);
 
-        Task<IEnumerable<Session>> GetAllSessions(int id);
+        IEnumerable<Session> GetAllSessions(int id);
 
-        Task<int> Save(Speaker speaker);
+        long Save(Speaker speaker);
     }
 
     public class SpeakerResponseModel

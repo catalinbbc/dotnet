@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MusicLibrary.Data;
 using MusicLibrary.Data.Entities;
-using Umbraco.Core.Services;
+using MusicLibrary.Api.Services;
 
 namespace MusicLibrary.Controllers
 {
@@ -50,7 +50,7 @@ namespace MusicLibrary.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtists(int id, Artist artist)
+        public async Task<IActionResult> PutArtist(int id, Artist artist)
         {
             if (id < 0)
             {
@@ -84,7 +84,7 @@ namespace MusicLibrary.Controllers
             await this.context.SaveChangesAsync();
 
             this.notificationService.Notify($"artist with id {artist.Id} was created!");
-            return this.CreatedAtAction("GetArtist", new { id = artist.Id }, artist;
+            return this.CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
         }
 
         // DELETE: api/hotels/5
