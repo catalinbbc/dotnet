@@ -90,17 +90,17 @@
         [HttpDelete("{id}")]
         public async Task<ActionResult<Hotel>> DeleteHotel(int id)
         {
-            var todoItem = await this.context.Hotels.FindAsync(id);
+            var item = await this.context.Hotels.FindAsync(id);
 
-            if (todoItem == null)
+            if (item == null)
             {
                 return this.NotFound();
             }
 
-            this.context.Hotels.Remove(todoItem);
+            this.context.Hotels.Remove(item);
             await this.context.SaveChangesAsync();
 
-            return todoItem;
+            return item;
         }
 
 
