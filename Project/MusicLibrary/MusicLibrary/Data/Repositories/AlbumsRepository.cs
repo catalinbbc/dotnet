@@ -50,6 +50,7 @@ namespace MusicLibrary.api.Data.Repositories
         public bool Exists(int id)
         {
             return this.context.Album.Any(album => album.AlbumId == id);
+
         }
     }
 }

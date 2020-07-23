@@ -19,6 +19,7 @@ namespace MusicLibrary.api.Data.Repositories
         internal bool Exists(long id)
         {
             return this.context.Artist.Any(a => a.Id == id);
+
         }
     }
 }
