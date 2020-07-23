@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicLibrary", "MusicLibrary\MusicLibrary.csproj", "{9C2DB3D8-2113-42B0-9319-8D06DA5B4959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.api", "MusicLibrary\MusicLibrary.api.csproj", "{9C2DB3D8-2113-42B0-9319-8D06DA5B4959}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicLibraryApplication", "..\MusicLibraryApplication\MusicLibraryApplication\MusicLibraryApplication.csproj", "{68B5EC4D-99D0-4165-A2C8-5744D33AE3CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9C2DB3D8-2113-42B0-9319-8D06DA5B4959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2DB3D8-2113-42B0-9319-8D06DA5B4959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C2DB3D8-2113-42B0-9319-8D06DA5B4959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B5EC4D-99D0-4165-A2C8-5744D33AE3CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B5EC4D-99D0-4165-A2C8-5744D33AE3CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B5EC4D-99D0-4165-A2C8-5744D33AE3CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B5EC4D-99D0-4165-A2C8-5744D33AE3CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
