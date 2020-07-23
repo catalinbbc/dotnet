@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
+using MusicLibrary.api.Data.Repositories;
 using MusicLibrary.Api.Services;
 using MusicLibrary.Data;
 
@@ -51,6 +52,11 @@ namespace MusicLibrary
                     "json", MediaTypeHeaderValue.Parse("application/json"));
             })
                 .AddXmlSerializerFormatters();
+
+
+            //repositories
+            services.AddScoped<AlbumsRepository>();
+            services.AddScoped<ArtistsRepository>();
         }
 
 
@@ -80,6 +86,8 @@ namespace MusicLibrary
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }

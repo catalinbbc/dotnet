@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.IO;
+using MusicLibrary.api.Data.Repositories;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace MusicLibrary.Controllers
 {
@@ -19,38 +21,32 @@ namespace MusicLibrary.Controllers
     [Route("api/[controller]")]
     public class AlbumsController : ControllerBase
     {
-       
+
         private readonly ILogger<AlbumsController> _logger;
-        private readonly ApiDbContext context;
+        private readonly AlbumsRepository albumsRepository;
         private readonly INotificationService notificationService;
 
         public ILogger<AlbumsController> logger { get; private set; }
 
-        public AlbumsController(ApiDbContext context,  INotificationService notificationService)
+        public AlbumsController(AlbumsRepository albumsRepository, INotificationService notificationService)
         {
-            this.context = context;
+            this.albumsRepository = albumsRepository;
             this.notificationService = notificationService;
             _logger = logger;
         }
 
         // GET: api/Albums
         [HttpGet]
-        public IEnumerable<Album> GetAlbum()
+        public async Task<IEnumerable<Album>> GetAlbums()
         {
-           
-            return this.context.Album.ToList();
+            return await this.albumsRepository.GetAllAsync();
         }
 
         // GET: api/Albums/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbum([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var album = await this.context.Album.FindAsync(id);
+            var album = await this.albumsRepository.GetAsync(id);
 
             if (album == null)
             {
@@ -74,23 +70,13 @@ namespace MusicLibrary.Controllers
                 return BadRequest();
             }
 
-            this.context.Entry(album).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            if (!albumsRepository.Exists(id))
+            {
+                return NotFound();
+            }
 
-            try
-            {
-                await this.context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AlbumExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await this.albumsRepository.UpdateAsync(album);
+
 
             return NoContent();
         }
@@ -104,22 +90,8 @@ namespace MusicLibrary.Controllers
                 return BadRequest(ModelState);
             }
 
-            this.context.Album.Add(album);
-            try
-            {
-                await this.context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AlbumExists(album.AlbumId))
-                {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await this.albumsRepository.AddAsync(album);
+
 
             return CreatedAtAction("GetAlbum", new { id = album.AlbumId }, album);
         }
@@ -128,26 +100,16 @@ namespace MusicLibrary.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAlbum([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var album = await this.context.Album.FindAsync(id);
+            var album = await this.albumsRepository.GetAsync(id);
             if (album == null)
             {
                 return NotFound();
             }
 
-            this.context.Album.Remove(album);
-            await this.context.SaveChangesAsync();
+            await this.albumsRepository.RemoveAsync(album);
 
             return Ok(album);
         }
 
-        private bool AlbumExists(int id)
-        {
-            return this.context.Album.Any(e => e.AlbumId == id);
-        }
     }
 }

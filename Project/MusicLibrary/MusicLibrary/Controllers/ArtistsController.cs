@@ -9,6 +9,7 @@ using MusicLibrary.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.Data;
 using MusicLibrary.Data.Entities;
+using MusicLibrary.api.Data.Repositories;
 
 namespace MusicLibrary.Controllers
 {
@@ -17,12 +18,12 @@ namespace MusicLibrary.Controllers
     public class ArtistsController : ControllerBase
     {
         private readonly ILogger<ArtistsController> _logger;
-        private readonly ApiDbContext context;
+        private readonly ArtistsRepository artistsRepository;
         private readonly INotificationService notificationService;
 
-        public ArtistsController(ApiDbContext context, INotificationService notificationService, ILogger<ArtistsController> logger)
+        public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger)
         {
-            this.context = context;
+            this.artistsRepository = artistsRepository;
             this.notificationService = notificationService;
             _logger = logger;
         }
@@ -30,16 +31,16 @@ namespace MusicLibrary.Controllers
         // GET: api/artists
         [HttpGet]
 
-        public IEnumerable<Artist> GetArtist()
+        public async Task<IEnumerable<Artist>> GetArtists()
         {
-            return this.context.Artist;
+            return await this.artistsRepository.GetAllAsync();
         }
 
         // GET: api/artists/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-            var artist = await this.context.Artist.FindAsync(id);
+            var artist = await this.artistsRepository.GetAsync(id);
 
             if (artist == null)
             {
@@ -53,26 +54,14 @@ namespace MusicLibrary.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtist(int id, Artist artist)
         {
-            if (id < 0)
+            if (!ArtistExists(id))
             {
-                throw new ArgumentException("negative id");
+                return NotFound();
             }
 
-            this.context.Entry(artist).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
-            try
-            {
-                await this.context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!this.ArtistExists(id))
-                {
-                    return this.NotFound();
-                }
+            await this.artistsRepository.UpdateAsync(artist);
 
-                throw;
-            }
 
             return this.NoContent();
         }
@@ -81,8 +70,8 @@ namespace MusicLibrary.Controllers
         [HttpPost]
         public async Task<ActionResult<Artist>> PostArtists(Artist artist)
         {
-            this.context.Artist.Add(artist);
-            await this.context.SaveChangesAsync();
+
+            await this.artistsRepository.AddAsync(artist);
 
             this.notificationService.Notify($"artist with id {artist.Id} was created!");
             return this.CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
@@ -92,23 +81,21 @@ namespace MusicLibrary.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Artist>> DeleteArtist(int id)
         {
-            var artistDel = await this.context.Artist.FindAsync(id);
-
-            if (artistDel == null)
+            var artist = await this.artistsRepository.GetAsync(id);
+            if (artist == null)
             {
-                return this.NotFound();
+                return this.NotFound();            
             }
 
-            this.context.Artist.Remove(artistDel);
-            await this.context.SaveChangesAsync();
+            await this.artistsRepository.DeleteAsync(artist);
 
-            return artistDel;
+            return artist;
         }
 
 
         private bool ArtistExists(long id)
         {
-            return this.context.Artist.Any(e => e.Id == id);
+            return this.artistsRepository.Exists(id);
         }
 
     }
