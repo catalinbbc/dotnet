@@ -15,5 +15,7 @@ namespace MusicLibrary.Data.Entities
 
         public int NrAlbums { get; set; }
 
+        public ICollection<Album> Album { get; set; }
+
     }
 }
