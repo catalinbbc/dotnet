@@ -140,6 +140,9 @@ namespace MusicLibrary.Controllers
             }
 
             await this.albumsRepository.UpdateAsync(album);
+            //invalidate cache 
+            var key = $"_album_{id}";
+            this.memoryCache.Remove(key);
 
 
             return NoContent();
@@ -171,7 +174,9 @@ namespace MusicLibrary.Controllers
             }
 
             await this.albumsRepository.RemoveAsync(album);
-
+            //invalidate cache 
+            var key = $"_artist_{id}";
+            this.memoryCache.Remove(key);
             return Ok(album);
         }
 
