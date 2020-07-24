@@ -14,7 +14,7 @@ namespace WebApiClient.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WebApiClient : Microsoft.AspNetCore.Mvc.ControllerBase
+    public class WebApiClient : ControllerBase
     {
         //private readonly HttpClient httpClient;
         private readonly IHttpClientFactory httpClientFactory;
@@ -29,11 +29,11 @@ namespace WebApiClient.Controllers
 
         //public object JsonConvert { get; private set; }
 
-        public async Task<AlbumModel> GetAlbums()
+        public async Task<IActionResult> GetAlbums()
         {
             var httpClient = this.httpClientFactory.CreateClient("albums-api");
 
-            //use Auth to get the toekn
+            //use Auth to get the token
 
             var json = JsonConvert.SerializeObject(new { username = "test", password = "test" });
 
@@ -45,7 +45,7 @@ namespace WebApiClient.Controllers
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
             }
 

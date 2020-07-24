@@ -61,7 +61,7 @@ namespace MusicLibrary.Application.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
 
-            return user.WithoutPassword();
+            return user.WithoutPassword(user);
         }
 
         public IEnumerable<User> GetAll()

@@ -10,8 +10,9 @@ namespace MusicLibrary.Application.Services
     {
         public static List<User> WithoutPasswords(this IEnumerable<User> users)
         {
-            return users.Select(u => u.WithoutPassword()).ToList();
+            return users.Select(u => u.WithoutPassword(u)).ToList();
         }
 
     }
+    
 }

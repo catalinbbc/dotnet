@@ -11,6 +11,11 @@ namespace MusicLibrary.Application.Services
         public string Password { get; set; }
         public string Token { get; set; }
 
+        internal User WithoutPassword(User user)
+        {
+            user.Password = null;
+            return user;
         
+        }
     }
 }
