@@ -20,6 +20,9 @@ namespace MusicLibrary.Data.Entities
         public string BillingPostalCode { get; set; }
         public decimal Total { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
         public Customer Customer { get; set; }
         public ICollection<InvoiceLine> InvoiceLine { get; set; }
     }

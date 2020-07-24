@@ -1,4 +1,6 @@
-﻿namespace MusicLibrary.Data.Entities
+﻿using System;
+
+namespace MusicLibrary.Data.Entities
 {
     public class PlaylistTrack
     {
@@ -7,5 +9,8 @@
 
         public Playlist Playlist { get; set; }
         public Track Track { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

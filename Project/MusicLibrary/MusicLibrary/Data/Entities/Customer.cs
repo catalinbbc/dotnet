@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MusicLibrary.Data.Entities
 {
@@ -22,6 +23,9 @@ namespace MusicLibrary.Data.Entities
         public string Fax { get; set; }
         public string Email { get; set; }
         public int? SupportRepId { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public Employee SupportRep { get; set; }
         public ICollection<Invoice> Invoice { get; set; }

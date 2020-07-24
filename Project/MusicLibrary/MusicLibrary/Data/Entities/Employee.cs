@@ -27,6 +27,9 @@ namespace MusicLibrary.Data.Entities
         public string Fax { get; set; }
         public string Email { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
         public Employee ReportsToNavigation { get; set; }
         public ICollection<Customer> Customer { get; set; }
         public ICollection<Employee> InverseReportsToNavigation { get; set; }

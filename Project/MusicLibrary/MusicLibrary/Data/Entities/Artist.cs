@@ -2,8 +2,10 @@
 
 namespace MusicLibrary.Data.Entities
 {
+    using MusicLibrary.api.Extensions;
+    using System;
     using System.ComponentModel.DataAnnotations;
-    public class Artist
+    public class Artist : IAuditable
     {
 
         public int Id { get; set; }
@@ -14,6 +16,9 @@ namespace MusicLibrary.Data.Entities
         public string City { get; set; }
 
         public int NrAlbums { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public ICollection<Album> Album { get; set; }
 
