@@ -14,11 +14,13 @@ using System.Threading.Tasks;
 using System.IO;
 using MusicLibrary.api.Data.Repositories;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AlbumsController : ControllerBase
     {
 

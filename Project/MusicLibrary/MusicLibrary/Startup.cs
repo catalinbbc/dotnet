@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,10 +13,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using MusicLibrary.api.Data.Repositories;
+using MusicLibrary.api.Middleware;
 using MusicLibrary.Api.Services;
+using MusicLibrary.Application.Services;
 using MusicLibrary.Data;
 
 namespace MusicLibrary
@@ -33,7 +38,7 @@ namespace MusicLibrary
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<ApiDbContext>(options => 
+            services.AddDbContext<ApiDbContext>(options =>
             options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
@@ -55,10 +60,25 @@ namespace MusicLibrary
             })
                 .AddXmlSerializerFormatters();
 
+            IConfigurationSection jwtSection = this.Configuration.GetSection("Jwt");
+            services.Configure<JwtSettings>(jwtSection);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(ops => ops.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSection["Key"]))
+                });
 
             //repositories
             services.AddScoped<AlbumsRepository>();
             services.AddScoped<ArtistsRepository>();
+
+            //services
+            services.AddScoped<IRequestLogger, RequestLogger>();
+            services.AddScoped<IUserService, UserService>();
         }
 
 
@@ -82,12 +102,22 @@ namespace MusicLibrary
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Music Library V1");
             });
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseExceptionHandler(new ExceptionHandlerOptions()
+            {
+                ExceptionHandler = new ExceptionHandlingMiddleware().Invoke
+            });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+
+
 
 
         }

@@ -1,4 +1,6 @@
-﻿namespace MusicLibrary.Domain.Entities
+﻿using System;
+
+namespace MusicLibrary.Domain.Entities
 {
     public class User
     {
@@ -8,5 +10,11 @@
         public string Username { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
+
+        public User WithoutPassword()
+        {
+            this.Password = null;
+            return this;
+        }
     }
 }

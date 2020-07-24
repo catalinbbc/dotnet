@@ -1,5 +1,4 @@
 ﻿using MusicLibrary.Application.Services;
-using MusicLibrary.Domain.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

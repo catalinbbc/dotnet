@@ -34,7 +34,7 @@ namespace MusicLibrary.api.Data.Repositories
 
         public async Task<List<TEntity>> GetAllAsync()
         {
-            return await context.Set<TEntity>().ToListAsync();
+            return context.Set<TEntity>().ToList();
         }
 
         public async Task UpdateAsync(TEntity entity)

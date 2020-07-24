@@ -22,7 +22,8 @@ namespace MusicLibrary.Migrations
             modelBuilder.Entity("MusicLibrary.Data.Entities.Album", b =>
                 {
                     b.Property<int>("AlbumId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");

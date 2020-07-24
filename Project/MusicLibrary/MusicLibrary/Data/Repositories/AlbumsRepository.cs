@@ -19,8 +19,8 @@ namespace MusicLibrary.api.Data.Repositories
         }
 
         public async Task<List<Album>> GetAllAsync()
-        {           
-            return await this.context.Album.ToListAsync();
+        {
+            return this.context.Album.ToList();
             
         }
 

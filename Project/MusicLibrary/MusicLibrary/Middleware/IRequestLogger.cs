@@ -6,6 +6,10 @@ namespace MusicLibrary.api.Middleware
     public interface IRequestLogger
     {
         void LogInfo(string message);
+
+        void LogError(Exception exception);
+
+        void LogWarning(Exception exception);
     }
 
     public class RequestLogger : IRequestLogger
@@ -20,9 +24,19 @@ namespace MusicLibrary.api.Middleware
             this.logger = logger;
         }
 
+        public void LogError(Exception exception)
+        {
+            this.logger.LogError(exception, "Error");
+        }
+
         public void LogInfo(string message)
         {
             this.logger.LogInformation($"{this.id} : {message}");
+        }
+
+        public void LogWarning(Exception exception)
+        {
+            this.logger.LogWarning(exception, "Warning");
         }
     }
 }

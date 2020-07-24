@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MusicLibrary.Migrations
@@ -8,24 +9,24 @@ namespace MusicLibrary.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Artist",
+                name: "Artist",               
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 120, nullable: false),
                     City = table.Column<string>(nullable: true),
                     NrAlbums = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Artist", x => x.Id);
+                    table.PrimaryKey("PK_Artist", x => x.Id);                    
                 });
 
             migrationBuilder.CreateTable(
                 name: "Employee",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LastName = table.Column<string>(maxLength: 20, nullable: false),
                     FirstName = table.Column<string>(maxLength: 20, nullable: false),
                     Title = table.Column<string>(maxLength: 30, nullable: true),
@@ -56,7 +57,7 @@ namespace MusicLibrary.Migrations
                 name: "Genre",
                 columns: table => new
                 {
-                    GenreId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 120, nullable: true)
                 },
                 constraints: table =>
@@ -68,7 +69,7 @@ namespace MusicLibrary.Migrations
                 name: "MediaType",
                 columns: table => new
                 {
-                    MediaTypeId = table.Column<int>(nullable: false),
+                    MediaTypeId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 120, nullable: true)
                 },
                 constraints: table =>
@@ -80,7 +81,7 @@ namespace MusicLibrary.Migrations
                 name: "Playlist",
                 columns: table => new
                 {
-                    PlaylistId = table.Column<int>(nullable: false),
+                    PlaylistId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 120, nullable: true)
                 },
                 constraints: table =>
@@ -92,7 +93,7 @@ namespace MusicLibrary.Migrations
                 name: "Album",
                 columns: table => new
                 {
-                    AlbumId = table.Column<int>(nullable: false),
+                    AlbumId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(maxLength: 160, nullable: false),
                     ArtistId = table.Column<int>(nullable: false)
                 },
@@ -111,7 +112,7 @@ namespace MusicLibrary.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(maxLength: 40, nullable: false),
                     LastName = table.Column<string>(maxLength: 20, nullable: false),
                     Company = table.Column<string>(maxLength: 80, nullable: true),
@@ -127,7 +128,7 @@ namespace MusicLibrary.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customer", x => x.CustomerId).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
                     table.ForeignKey(
                         name: "FK_CustomerSupportRepId",
                         column: x => x.SupportRepId,
@@ -140,7 +141,7 @@ namespace MusicLibrary.Migrations
                 name: "Track",
                 columns: table => new
                 {
-                    TrackId = table.Column<int>(nullable: false),
+                    TrackId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 200, nullable: false),
                     AlbumId = table.Column<int>(nullable: true),
                     MediaTypeId = table.Column<int>(nullable: false),
@@ -177,7 +178,7 @@ namespace MusicLibrary.Migrations
                 name: "Invoice",
                 columns: table => new
                 {
-                    InvoiceId = table.Column<int>(nullable: false),
+                    InvoiceId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CustomerId = table.Column<int>(nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     BillingAddress = table.Column<string>(maxLength: 70, nullable: true),
@@ -202,7 +203,7 @@ namespace MusicLibrary.Migrations
                 name: "PlaylistTrack",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TrackId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -226,7 +227,7 @@ namespace MusicLibrary.Migrations
                 name: "InvoiceLine",
                 columns: table => new
                 {
-                    InvoiceLineId = table.Column<int>(nullable: false),
+                    InvoiceLineId = table.Column<int>(nullable: false).Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     InvoiceId = table.Column<int>(nullable: false),
                     TrackId = table.Column<int>(nullable: false),
                     UnitPrice = table.Column<decimal>(type: "numeric(10, 2)", nullable: false),

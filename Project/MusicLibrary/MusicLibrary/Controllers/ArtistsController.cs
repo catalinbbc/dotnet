@@ -10,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 using MusicLibrary.Data;
 using MusicLibrary.Data.Entities;
 using MusicLibrary.api.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ArtistsController : ControllerBase

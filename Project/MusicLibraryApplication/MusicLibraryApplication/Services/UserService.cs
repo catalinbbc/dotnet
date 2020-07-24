@@ -4,8 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MusicLibrary.Application.Services;
+using MusicLibrary.Domain.Entities;
 
 namespace MusicLibrary.Application.Services
 {
@@ -29,15 +31,15 @@ namespace MusicLibrary.Application.Services
             }
         };
 
-        private readonly AppSettings _appSettings;
+        private readonly JwtSettings jwtSettings;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<JwtSettings> appSettings)
         {
-            _appSettings = appSettings.Value;
+            jwtSettings = appSettings.Value;
         }
 
         public User Authenticate(string username, string password)
-        {
+        {         
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
             // return null if user not found
@@ -46,7 +48,7 @@ namespace MusicLibrary.Application.Services
 
             // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Token);
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -68,7 +70,4 @@ namespace MusicLibrary.Application.Services
         }
     }
 
-    public interface IOptions<T>
-    {
-    }
 }

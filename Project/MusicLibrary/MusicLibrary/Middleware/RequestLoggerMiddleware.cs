@@ -22,7 +22,7 @@ namespace MusicLibrary.api.Middleware
 
             await this.next.Invoke(context);
 
-            simpleLogger.LogInfo($"Finished in Milliseconds: {(DateTime.Now - date).Milliseconds}");
+            simpleLogger.LogInfo($"Finished in Milliseconds: {(DateTime.Now - date).TotalMilliseconds}");
         }
     }
 }
