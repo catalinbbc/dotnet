@@ -11,6 +11,10 @@ using MusicLibrary.Data;
 using MusicLibrary.Data.Entities;
 using MusicLibrary.api.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
+using System.ComponentModel.DataAnnotations;
+using System.Threading;
+using Microsoft.AspNetCore.Http;
 
 namespace MusicLibrary.Controllers
 {
@@ -22,12 +26,15 @@ namespace MusicLibrary.Controllers
         private readonly ILogger<ArtistsController> _logger;
         private readonly ArtistsRepository artistsRepository;
         private readonly INotificationService notificationService;
+        private readonly IMemoryCache memoryCache;
 
-        public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger)
+
+        public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger, , IMemoryCache memoryCache)
         {
             this.artistsRepository = artistsRepository;
             this.notificationService = notificationService;
             _logger = logger;
+            this.memoryCache = memoryCache;
         }
 
         // GET: api/artists
@@ -35,7 +42,11 @@ namespace MusicLibrary.Controllers
 
         public async Task<IEnumerable<Artist>> GetArtists()
         {
-            return await this.artistsRepository.GetAllAsync();
+
+            var artists = await this.artistsRepository.GetAllAsync();
+            return (IEnumerable<Artist>)Ok(artists);
+
+            //return await this.artistsRepository.GetAllAsync();
         }
 
         // GET: api/artists/{id}
@@ -54,11 +65,17 @@ namespace MusicLibrary.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtist(int id, Artist artist)
+        public async Task<IActionResult> PutArtist(int id, [FromBody] Artist artist, [FromHeader(Name = "if-match")][Required] string eTag, CancellationToken cancellationToken)
+
         {
             if (!ArtistExists(id))
             {
                 return NotFound();
+            }
+
+            if (eTag != artist.GetEtag())
+            {
+                return StatusCode(StatusCodes.Status412PreconditionFailed, "Invalid Etag value");
             }
 
 

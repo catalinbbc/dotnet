@@ -15,6 +15,9 @@ using System.IO;
 using MusicLibrary.api.Data.Repositories;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Memory;
+using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace MusicLibrary.Controllers
 {
@@ -27,21 +30,26 @@ namespace MusicLibrary.Controllers
         private readonly ILogger<AlbumsController> _logger;
         private readonly AlbumsRepository albumsRepository;
         private readonly INotificationService notificationService;
+        private readonly IMemoryCache memoryCache;
 
         public ILogger<AlbumsController> logger { get; private set; }
 
-        public AlbumsController(AlbumsRepository albumsRepository, INotificationService notificationService)
+        public AlbumsController(AlbumsRepository albumsRepository, INotificationService notificationService, IMemoryCache memoryCache)
         {
             this.albumsRepository = albumsRepository;
             this.notificationService = notificationService;
             _logger = logger;
+            this.memoryCache = memoryCache;
         }
 
         // GET: api/Albums
         [HttpGet]
         public async Task<IEnumerable<Album>> GetAlbums()
         {
-            return await this.albumsRepository.GetAllAsync();
+            var albums = await this.albumsRepository.GetAllAsync();
+            return (IEnumerable<Album>)Ok(albums);
+
+            //return await this.albumsRepository.GetAllAsync();
         }
 
         // GET: api/Albums/5
@@ -60,11 +68,17 @@ namespace MusicLibrary.Controllers
 
         // PUT: api/Albums/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAlbum([FromRoute] int id, [FromBody] Album album)
+        public async Task<IActionResult> PutAlbum([FromRoute] int id, [FromBody] Album album, [FromHeader(Name = "if-match")][Required] string eTag, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+
+            if (eTag != album.GetEtag())
+            {
+                return StatusCode(StatusCodes.Status412PreconditionFailed, "Invalid Etag value");
             }
 
             if (id != album.AlbumId)
