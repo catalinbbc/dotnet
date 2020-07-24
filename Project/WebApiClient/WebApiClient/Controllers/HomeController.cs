@@ -45,7 +45,7 @@ namespace WebApiClient.Controllers
             {
                 if (response.StatusCode == HttpStatusCode.NotFound)
                 {
-                    return this.NotFound();
+                    return NotFound();
                 }
             }
 
@@ -71,9 +71,9 @@ namespace WebApiClient.Controllers
             HttpResponseMessage responseStudents = tasks.First().Result;
             var resultStudents = await responseStudents.Content.ReadAsStringAsync();
 
-            dynamic studentsData = JsonConvert.DeserializeObject<dynamic>(resultStudents);
+            dynamic theAlbums = JsonConvert.DeserializeObject<dynamic>(resultStudents);
 
-            return this.Ok(resultStudents);
+            return this.Ok(theAlbums);
 
         }
 
