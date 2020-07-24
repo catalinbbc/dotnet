@@ -28,7 +28,7 @@ namespace MusicLibrary.Controllers
         private readonly ArtistsRepository artistsRepository;
         private readonly INotificationService notificationService;
         private readonly IMemoryCache memoryCache;
-
+        private MemoryCacheEntryOptions cacheEntryOptions;
 
         public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger, IMemoryCache memoryCache)
         {
@@ -36,6 +36,15 @@ namespace MusicLibrary.Controllers
             this.notificationService = notificationService;
             _logger = logger;
             this.memoryCache = memoryCache;
+
+
+            this.cacheEntryOptions = new MemoryCacheEntryOptions();
+
+            // set AbsoluteExpiration
+            //options.AbsoluteExpiration = DateTime.Now.AddMinutes(1);
+
+            // set SlidingExpiration 
+            this.cacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(10);
         }
 
         // GET: api/artists
@@ -43,9 +52,20 @@ namespace MusicLibrary.Controllers
 
         public async Task<IEnumerable<Artist>> GetArtists()
         {
+            var key = $"_artists_all";
+            if (this.memoryCache.TryGetValue(key, out List<Artist> artists))
+            {
+                this._logger.LogInformation("ArtistController-GetArtists all cache hit");
+                return (IEnumerable<Artist>)Ok(artists);
+            }
+            else
+            {
+                var artistsNonC = await this.artistsRepository.GetAllAsync();
+                this.memoryCache.Set(key, artistsNonC, this.cacheEntryOptions);
 
-            var artists = await this.artistsRepository.GetAllAsync();
-            return (IEnumerable<Artist>)Ok(artists);
+                return (IEnumerable<Artist>)Ok(artistsNonC);
+
+            }
 
             //return await this.artistsRepository.GetAllAsync();
         }
@@ -54,14 +74,25 @@ namespace MusicLibrary.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-            var artist = await this.artistsRepository.GetAsync(id);
 
-            if (artist == null)
+            var key = $"_artist_{id}";
+            
+            if (this.memoryCache.TryGetValue(key, out Artist artist))
             {
-                return this.NotFound();
+                this._logger.LogInformation("ArtistController-GetArtists all cache hit");
+                return artist;
             }
-
-            return artist;
+            else
+            {
+                var artistNonCache = await this.artistsRepository.GetAsync(id);
+                if (artist == null)
+                {
+                    return this.NotFound();
+                }
+                this.memoryCache.Set(key, artistNonCache, this.cacheEntryOptions);
+                return artistNonCache;
+            }
+            
         }
 
 

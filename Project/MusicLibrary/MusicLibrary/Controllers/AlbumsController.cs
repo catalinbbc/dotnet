@@ -32,6 +32,7 @@ namespace MusicLibrary.Controllers
         private readonly AlbumsRepository albumsRepository;
         private readonly INotificationService notificationService;
         private readonly IMemoryCache memoryCache;
+        private MemoryCacheEntryOptions cacheEntryOptions;
 
         public ILogger<AlbumsController> logger { get; private set; }
 
@@ -41,14 +42,39 @@ namespace MusicLibrary.Controllers
             this.notificationService = notificationService;
             _logger = logger;
             this.memoryCache = memoryCache;
+
+            this.cacheEntryOptions = new MemoryCacheEntryOptions();
+
+            // set AbsoluteExpiration
+            //options.AbsoluteExpiration = DateTime.Now.AddMinutes(1);
+
+            // set SlidingExpiration 
+            this.cacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(10);
         }
 
         // GET: api/Albums
         [HttpGet]
         public async Task<IEnumerable<Album>> GetAlbums()
         {
-            var albums = await this.albumsRepository.GetAllAsync();
-            return (IEnumerable<Album>)Ok(albums);
+
+
+            var key = $"_albums_all";
+            if (this.memoryCache.TryGetValue(key, out List<Album> albums))
+            {
+                this._logger.LogInformation("AlbumController-GetAlbums all cache hit");
+                return (IEnumerable<Album>)Ok(albums);
+            }
+            else
+            {
+                var albumsNonCache = await this.albumsRepository.GetAllAsync();
+                this.memoryCache.Set(key, albumsNonCache, this.cacheEntryOptions);
+
+                return (IEnumerable<Album>)Ok(albumsNonCache);
+
+            }
+
+            //var albums = await this.albumsRepository.GetAllAsync();
+            //return (IEnumerable<Album>)Ok(albums);
 
             //return await this.albumsRepository.GetAllAsync();
         }
@@ -57,6 +83,26 @@ namespace MusicLibrary.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbum([FromRoute] int id)
         {
+
+            var key = $"_album_{id}";
+
+            if (this.memoryCache.TryGetValue(key, out Album album))
+            {
+                this._logger.LogInformation($"AlbumController-GetAlbum[id] cache hit");
+                return (IActionResult)album;
+            }
+            else
+            {
+                var albumNonCache = await this.albumsRepository.GetAsync(id);
+                if (albumNonCache == null)
+                {
+                    return this.NotFound();
+                }
+                this.memoryCache.Set(key, albumNonCache, this.cacheEntryOptions);
+                return Ok(albumNonCache);
+            }
+
+            /*
             var album = await this.albumsRepository.GetAsync(id);
 
             if (album == null)
@@ -65,6 +111,7 @@ namespace MusicLibrary.Controllers
             }
 
             return Ok(album);
+            */
         }
 
         // PUT: api/Albums/5
