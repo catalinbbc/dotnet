@@ -68,10 +68,10 @@ namespace WebApiClient.Controllers
             }
             Task.WaitAll(tasks.ToArray());
 
-            HttpResponseMessage responseStudents = tasks.First().Result;
-            var resultStudents = await responseStudents.Content.ReadAsStringAsync();
+            HttpResponseMessage responseAlbums = tasks.First().Result;
+            var results = await responseAlbums.Content.ReadAsStringAsync();
 
-            dynamic theAlbums = JsonConvert.DeserializeObject<dynamic>(resultStudents);
+            dynamic theAlbums = JsonConvert.DeserializeObject<dynamic>(results);
 
             return this.Ok(theAlbums);
 
