@@ -15,6 +15,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
+using MusicLibrary.api.Extensions;
 
 namespace MusicLibrary.Controllers
 {
@@ -29,7 +30,7 @@ namespace MusicLibrary.Controllers
         private readonly IMemoryCache memoryCache;
 
 
-        public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger, , IMemoryCache memoryCache)
+        public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger, IMemoryCache memoryCache)
         {
             this.artistsRepository = artistsRepository;
             this.notificationService = notificationService;
