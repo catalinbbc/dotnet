@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
 using MusicLibrary.api.Extensions;
+using MusicLibrary.api.Services;
 
 namespace MusicLibrary.Controllers
 {
@@ -29,6 +30,7 @@ namespace MusicLibrary.Controllers
         private readonly INotificationService notificationService;
         private readonly IMemoryCache memoryCache;
         private MemoryCacheEntryOptions cacheEntryOptions;
+        private IArtistService service;
 
         public ArtistsController(ArtistsRepository artistsRepository, INotificationService notificationService, ILogger<ArtistsController> logger, IMemoryCache memoryCache)
         {
@@ -45,6 +47,11 @@ namespace MusicLibrary.Controllers
 
             // set SlidingExpiration 
             this.cacheEntryOptions.SlidingExpiration = TimeSpan.FromMinutes(10);
+        }
+
+        public ArtistsController(IArtistService service)
+        {
+            this.service = service;
         }
 
         // GET: api/artists

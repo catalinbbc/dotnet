@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.Application", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.Domain", "..\MusicLibrary.Domain\MusicLibrary.Domain\MusicLibrary.Domain.csproj", "{07DAB3D2-FFE7-4DC6-B211-FD1BC8975825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiClient", "..\WebApiClient\WebApiClient\WebApiClient.csproj", "{F146F84E-91F9-4A46-830B-EBA08732B08B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient", "..\WebApiClient\WebApiClient\WebApiClient.csproj", "{F146F84E-91F9-4A46-830B-EBA08732B08B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{F415E35E-E035-4B04-8E55-7B908423A1ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F146F84E-91F9-4A46-830B-EBA08732B08B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F146F84E-91F9-4A46-830B-EBA08732B08B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F146F84E-91F9-4A46-830B-EBA08732B08B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F415E35E-E035-4B04-8E55-7B908423A1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F415E35E-E035-4B04-8E55-7B908423A1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F415E35E-E035-4B04-8E55-7B908423A1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F415E35E-E035-4B04-8E55-7B908423A1ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

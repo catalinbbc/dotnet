@@ -21,6 +21,6 @@ namespace MusicLibrary.Data.Entities
         public DateTime UpdatedAt { get; set; }
 
         public ICollection<Album> Album { get; set; }
-
+        public Guid ArtistId { get; internal set; }
     }
 }
