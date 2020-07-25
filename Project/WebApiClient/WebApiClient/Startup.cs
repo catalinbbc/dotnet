@@ -26,7 +26,7 @@ namespace WebApiClient
 
             services.AddHttpClient("albums", client =>
             {
-                client.BaseAddress = new Uri("http://localhost:554433/");
+                client.BaseAddress = new Uri("http://localhost:5544/");
                 client.Timeout = TimeSpan.FromMinutes(1);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

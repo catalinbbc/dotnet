@@ -1,19 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MusicLibrary.api.Extensions;
+﻿using MusicLibrary.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MusicLibrary.Data.Entities
+namespace MusicLibrary.api.Models
 {
-    public class Album : IAuditable
+    public class AlbumModel
     {
-        public Album()
-        {
-            Track = new HashSet<Track>();
-        }
-
         public int AlbumId { get; set; }
         public string Title { get; set; }
         public int ArtistId { get; set; }
@@ -21,8 +15,5 @@ namespace MusicLibrary.Data.Entities
         public DateTime UpdatedAt { get; set; }
 
         public Artist Artist { get; set; }
-        public ICollection<Track> Track { get; set; }
-
-       
     }
 }

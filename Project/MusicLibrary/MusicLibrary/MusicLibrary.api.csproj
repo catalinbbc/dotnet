@@ -31,5 +31,9 @@
     <ProjectReference Include="..\..\MusicLibraryApplication\MusicLibraryApplication\MusicLibrary.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 
 </Project>
